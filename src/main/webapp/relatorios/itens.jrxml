@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-07T15:47:47 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="itens" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3d643256-c775-4d0d-a042-bfb3e5f58d27">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CaninoFeliz"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="Y2FuaW5vZmVsaXouZmFicmljYW50ZSAsMTk1LDY3LGExZmY2M2VhLTY2ZTEtNDdiMy1iNGEwLTU1&#xA;YWZlYzM2NWU3NDtjYW5pbm9mZWxpei5pdGVtICwxNSwxNSxhYzg0MjI4ZC02Y2RmLTQwMmItYTRl&#xA;MC00MGM0OTQ1NWU3MjI7"/>
+	<parameter name="DESCRICAO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT caninofeliz.item.descricao,
+	caninofeliz.item.preco,
+	caninofeliz.item.quantidade,
+	caninofeliz.item.validade,
+	caninofeliz.fabricante.descricao
+FROM caninofeliz.item
+	INNER JOIN caninofeliz.fabricante ON 
+	 caninofeliz.item.fabricante_codigo = caninofeliz.fabricante.codigo 
+WHERE 
+	 caninofeliz.item.descricao LIKE $P{DESCRICAO} 
+ORDER BY caninofeliz.item.descricao ASC]]>
+	</queryString>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="preco" class="java.math.BigDecimal"/>
+	<field name="quantidade" class="java.lang.Integer"/>
+	<field name="validade" class="java.sql.Date"/>
+	<field name="COLUMN_5" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="-11" y="-10" width="571" height="30" uuid="982b4168-0c7f-4143-bc8b-043c89ee7502"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="20" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Relatorio de Item]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="-4" y="0" width="100" height="30" uuid="9b3ae6fa-cb29-4247-9736-9329a8174212"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[descricao]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="0" width="100" height="30" uuid="126f167e-c24e-4158-868c-24dbbab20f30"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[preco]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="0" width="100" height="30" uuid="3604c821-e559-41cb-a9b8-8be56341840a"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="0" width="100" height="30" uuid="9c871cba-ae81-4849-a970-52475cc1ade7"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[validade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="100" height="30" uuid="6b98af2a-1069-48db-9106-baa707221121"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Fabricante]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="-4" y="12" width="100" height="30" uuid="e22a55e6-b7b7-412b-8f65-37ce78218648"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="16" width="100" height="30" uuid="c7338ec2-a0f0-4e5c-abd4-1077f4615404"/>
+				<textFieldExpression><![CDATA[$F{preco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="20" width="100" height="30" uuid="1d55c0db-2d66-4570-a6ed-4a7b3c19a3ce"/>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="20" width="100" height="30" uuid="ba2e2265-6634-48d2-9ddd-22bb2b61ffc1"/>
+				<textFieldExpression><![CDATA[$F{validade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="20" width="100" height="30" uuid="017735a4-e831-44e5-942d-eeef6709a16b"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_5}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

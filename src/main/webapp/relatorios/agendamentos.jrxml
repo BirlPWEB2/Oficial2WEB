@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-05T20:01:32 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="agendamentos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9e2d3291-4609-436a-9256-885a66fbbfad">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CaninoFeliz"/>
+	<parameter name="Funcionario" class="java.lang.String"/>
+	<parameter name="CAMINHO_BANNER" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT caninofeliz.horarioagenda.data,
+	caninofeliz.horarioagenda.horario,
+	caninofeliz.animal.nome,
+	caninofeliz.funcionario.nome
+FROM caninofeliz.horarioagenda
+	INNER JOIN caninofeliz.agenda ON 
+	 caninofeliz.horarioagenda.agenda_codigo = caninofeliz.agenda.codigo 
+	INNER JOIN caninofeliz.animal ON 
+	 caninofeliz.horarioagenda.animal_codigo = caninofeliz.animal.codigo 
+	INNER JOIN caninofeliz.funcionario ON 
+	 caninofeliz.agenda.funcionario_codigo = caninofeliz.funcionario.codigo 
+WHERE 
+	 caninofeliz.funcionario.nome LIKE $P{Funcionario} 
+ORDER BY caninofeliz.funcionario.nome ASC]]>
+	</queryString>
+	<field name="data" class="java.sql.Date"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="horario" class="java.lang.String"/>
+	<field name="COLUMN_4" class="java.lang.String"/>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="560" height="30" uuid="4fd309a8-c213-4452-912b-adb4e35f2c5c"/>
+				<textElement textAlignment="Center" verticalAlignment="Justified">
+					<font fontName="Arial" size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RELATORIO DE CONSULTAS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="-10" y="11" width="100" height="30" uuid="c9ca828e-95a1-4f97-be1a-d53765b89482"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="149" y="11" width="100" height="30" uuid="d1e98cfa-cf3f-47ff-bfcc-5af9133177e5"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Animal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="11" width="100" height="30" uuid="c83a5d00-acd0-4dc4-92d1-ead496f1cd14"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Horario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="469" y="11" width="100" height="30" uuid="514f60ab-ba81-471b-a941-9258f7014ef5"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Funcionario]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="-10" y="44" width="100" height="30" uuid="bfc070c6-f035-4d75-801e-86fa1e129a54"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="45" width="100" height="30" uuid="d9019b6a-8f1f-4f8a-b184-02bc1de42345"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="44" width="100" height="30" uuid="02d532f0-fa3b-4498-b70c-38b9063d7766"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="44" width="100" height="30" uuid="0a0368c8-4b09-4a46-ba82-32585f73d96b"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COLUMN_4}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

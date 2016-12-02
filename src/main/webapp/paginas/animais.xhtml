@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel header="Animais">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{animalBean.animais}" var="animal"
+					rows="5">
+					<f:facet name="header">
+						<p:commandButton value="Novo" actionListener="#{animalBean.novo}"
+							oncomplete="PF('dialogo').show();"
+							update=":msg :formCadastro:painel" >
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+					<p:column headerText="Nome" filterBy="#{animal.nome}"
+						sortBy="#{animal.nome}">
+						<h:outputText value="#{animal.nome}" />
+					</p:column>
+
+					<p:column headerText="Dono" filterBy="#{animal.cliente.nome}"
+						sortBy="#{animal.cliente.nome}}">
+						<h:outputText value="#{animal.cliente.nome}" />
+					</p:column>
+
+					<p:column headerText="Opções">
+						<p:commandButton value="Excluir"
+							actionListener="#{animalBean.excluir}"
+							update=":msg :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o animal?" icon="ui-icon-alert" />
+							<f:attribute name="animalSelecionada" value="#{animal}" />
+						</p:commandButton>
+
+						<p:commandButton value="Editar"
+							actionListener="#{animalBean.editar}"
+							update=":msg :formCadastro:painel"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="animalSelecionada" value="#{animal}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Cadastro" widgetVar="dialogo" draggable="false"
+			resizable="false" modal="true" closable="false" appendTo="@(body)">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="nome" value="Nome:" />
+					<p:inputText id="nome" maxlength="50" size="30"
+						value="#{animalBean.animal.nome}" required="true"
+						requiredMessage="O campo Nome não pode estar vazio"/>
+
+					<p:outputLabel for="cor" value="Cor:" />
+					<p:inputText id="cor" maxlength="50" size="30"
+						value="#{animalBean.animal.cor}" required="true"
+						requiredMessage="O campo Cor não pode estar vazio"/>
+
+					<p:outputLabel for="idade" value="Idade:" />
+					<p:inputText id="idade" maxlength="50" size="30"
+						value="#{animalBean.animal.idade}" required="true"
+						requiredMessage="O campo idade não pode estar vazio"/>
+
+					<p:outputLabel for="dataNascimento" value="Data de Nascimento:" />
+					<p:calendar id="dataNascimento"
+						value="#{animalBean.animal.nascimento}" required="true"
+						requiredMessage="O campo 'Data de Nascimento' é obrigatório"
+						size="10" locale="pt_BR" />
+
+
+					<p:outputLabel for="dono" value="Dono:" />
+					<p:selectOneMenu id="dono" filter="true" value="#{animalBean.animal.cliente}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo Dono não pode estar vazio">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um dono" />
+						<f:selectItems value="#{animalBean.clientes}" var="cliente"
+							itemValue="#{cliente}" itemLabel="#{cliente.nome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="raca" value="Raça:" />
+					<p:selectOneMenu id="raca" filter="true" value="#{animalBean.animal.raca}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo Raca não pode estar vazio">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma raca" />
+						<f:selectItems value="#{animalBean.racas}" var="raca"
+							itemValue="#{raca}" itemLabel="#{raca.descricao}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="especie" value="Especie:" />
+					<p:selectOneMenu id="especie" filter="true" value="#{animalBean.animal.especie}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo Especie não pode estar vazio">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma especie" />
+						<f:selectItems value="#{animalBean.especies}" var="especie"
+							itemValue="#{especie}" itemLabel="#{especie.descricao}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{animalBean.salvar}"
+						update=":msg :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

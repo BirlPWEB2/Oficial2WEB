@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>CaninoFeliz</title>
+	<h:outputStylesheet library="css" name="estilos.css" />
+	<h:outputStylesheet library="js" name="javascript.js" />
+</h:head>
+<h:body>
+	<p:growl id="msg" />
+
+	<p:layout fullPage="true" id="geral">
+		<p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+			<h:form id="formMenu">
+				<p:panelMenu>
+					<p:menuitem value="Sair" url="/paginas/agradecimento.xhtml"
+						rendered="true" />
+
+					<p:submenu label="Administrador - Cadastros" rendered="true">
+						<p:menuitem value="Estados" url="/paginas/estados.xhtml"
+							rendered="true" />
+						<p:menuitem value="Cidades" url="/paginas/cidades.xhtml"
+							rendered="true" />
+						<p:menuitem value="Funcionários" url="/paginas/funcionarios.xhtml" />
+						<p:menuitem value="Cargos" url="/paginas/cargos.xhtml" />
+						<p:menuitem value="Especies" url="/paginas/especies.xhtml"
+							rendered="true" />
+						<p:menuitem value="Racas" url="/paginas/racas.xhtml"
+							rendered="true" />
+						<p:menuitem value="Fabricantes" url="/paginas/fabricantes.xhtml" />
+					</p:submenu>
+
+					<p:submenu label="Cadastros">
+						<p:menuitem value="Item" url="/paginas/itens.xhtml" />
+						<p:menuitem value="Clientes" url="/paginas/clientes.xhtml" />
+						<p:menuitem value="Animal" url="/paginas/animais.xhtml" />
+						<p:menuitem value="Telefones" url="/paginas/telefones.xhtml"
+							rendered="true" />
+						<p:menuitem value="Enderecos" url="/paginas/enderecos.xhtml"
+							rendered="true" />
+					</p:submenu>
+
+					<p:submenu label="Agendamentos">
+						<p:menuitem value="Agendas" url="/paginas/agendas.xhtml" />
+						<p:menuitem value="Cadastro de Horarios"
+							url="/paginas/horariosLivres.xhtml" />
+						<p:menuitem value="Horarios Livres"
+							url="/paginas/agendamentos.xhtml" />
+
+					</p:submenu>
+
+					<p:submenu label="Servicos">
+						<p:menuitem value="Servicos" url="/paginas/servicos.xhtml" />
+						<p:menuitem value="Vendas" url="/paginas/vendas.xhtml" />
+						<p:menuitem value="OrdemDeServicos"
+							url="/paginas/ordemservicos.xhtml" />
+					</p:submenu>
+
+					<p:submenu label="Relatorios" rendered="true">
+						<p:menuitem value="Servicos"
+							url="/paginas/historicoservicos.xhtml" />
+						<p:menuitem value="Vendas" url="/paginas/historicovendas.xhtml" />
+						<p:menuitem value="Clientes"
+							url="/paginas/historicoclientes.xhtml" />
+						<p:menuitem value="Funcionario"
+							url="/paginas/historicofuncionarios.xhtml" />
+						<p:menuitem value="Itens" url="/paginas/historicoitens.xhtml" />
+						<p:menuitem value="Agendamentos"
+							url="/paginas/historicoagendamentos.xhtml" />
+					</p:submenu>
+
+					<p:submenu label="Ajuda" rendered="true">
+						<p:menuitem value="Sobre" url="/paginas/sobre.xhtml" />
+					</p:submenu>
+				</p:panelMenu>
+			</h:form>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center" id="conteudo">
+			<ui:insert name="conteudo" />
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

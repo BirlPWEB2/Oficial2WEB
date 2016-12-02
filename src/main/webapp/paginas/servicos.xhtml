@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+	<ui:define name="conteudo">
+
+		<h:form id="formulario">
+			<p:panel header="Itens">
+				<p:dataTable id="tabelaItem"
+					emptyMessage="Nenhum registro encontrado." paginator="true"
+					value="#{servicoBean.itens}" var="item" rows="5"
+					paginatorPosition="bottom">
+
+					<p:column headerText="Descrição" filterBy="#{item.descricao}"
+						sortBy="#{item.descricao}">
+						<h:outputText value="#{item.descricao}" />
+					</p:column>
+
+					<p:column headerText="Quantidade" sortBy="#{produto.quantidade}">
+						<h:outputText value="#{item.quantidade}" />
+					</p:column>
+
+					<p:column headerText="Fabricante"
+						filterBy="#{item.fabricante.descricao}"
+						sortBy="#{item.fabricante.descricao}">
+						<h:outputText value="#{item.fabricante.descricao}" />
+					</p:column>
+
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-plus"
+							actionListener="#{servicoBean.adicionar}"
+							update=":formulario:tabelaItemUtilizado :formulario:painelFinalizacao">
+							<f:attribute name="itemSelecionado" value="#{item}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:panel header="Lista de Item - Servico">
+				<p:dataTable id="tabelaItemUtilizado"
+					emptyMessage="Nenhum registro encontrado." paginator="true"
+					value="#{servicoBean.itensServico}" var="itemServico" rows="5"
+					paginatorPosition="bottom">
+
+					<p:column headerText="Descrição">
+						<h:outputText value="#{itemServico.item.descricao}" />
+					</p:column>
+
+					<p:column headerText="Quantidade.">
+						<h:outputText value="#{itemServico.quantidade}" />
+					</p:column>
+
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-minus"
+							actionListener="#{servicoBean.remover}"
+							update=":formulario:tabelaItemUtilizado :formulario:painelFinalizacao">
+							<f:attribute name="itemSelecionado" value="#{itemServico}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:panel header="Finalização">
+				<h:panelGrid id="painelFinalizacao" columns="3">
+					<p:commandButton value="Finalizar"
+						update=":msg :formularioFinalizar:painelFinalizar"
+						oncomplete="PF('dialogo').show();">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Finalizar Venda" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false" appendTo="@(body)">
+			<h:form id="formularioFinalizar">
+				<h:panelGrid id="painelFinalizar" columns="2">
+
+					<p:outputLabel for="Descricao" value="Nome:" />
+					<p:inputText id="Descricao" maxlength="50" size="25"
+						value="#{servicoBean.servico.descricao}" required="true"
+						requiredMessage="O campo Descricao não pode estar vazio" />
+
+					<p:outputLabel for="preco" value="Preço:" />
+					<p:inputText id="preco" maxlength="7" size="10"
+						value="#{servicoBean.servico.preco}" required="true"
+						requiredMessage="O campo 'Preço' é obrigatório"
+						converterMessage="Informe um valor válido para o campo 'Preço''"
+						validatorMessage="Informe um valor entre 0,01 e 9999,99 para o campo 'Preço'">
+						<f:validateDoubleRange minimum="0.01" maximum="9999.99" />
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</p:inputText>
+
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{servicoBean.salvar}"
+						update=":msg :formulario:tabelaItem :formulario:tabelaItemUtilizado :formulario:painelFinalizacao"
+						oncomplete="PF('dialogo').hide();" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

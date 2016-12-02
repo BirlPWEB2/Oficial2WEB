@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel header="Racas">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{racaBean.racas}" var="raca" rows="5">
+					<f:facet name="header">
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{racaBean.novo}" update=":formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+					<p:column headerText="Nome" sortBy="#{raca.descricao}"
+						filterBy="#{raca.descricao}">
+						<h:outputText value="#{raca.descricao}" />
+					</p:column>
+
+					<p:column headerText="Opções">
+						<p:commandButton value="Excluir"
+							actionListener="#{racaBean.excluir}"
+							update=":msg :formListagem:tabela">
+							<p:confirm header="Confirmação" message="Deseja excluir a raca?"
+								icon="ui-icon-alert" />
+							<f:attribute name="racaSelecionado" value="#{raca}" />
+						</p:commandButton>
+
+						<p:commandButton value="Editar"
+							actionListener="#{racaBean.editar}" update=":formCadastro:painel"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="racaSelecionado" value="#{raca}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Cadastro" widgetVar="dialogo" draggable="false"
+			resizable="false" modal="true" closable="false" appendTo="@(body)">
+			<h:form id="formCadastro">
+				<h:panelGrid columns="1" id="painel">
+					<p:outputLabel for="nome" value="Nome:" />
+					<p:inputText id="nome" maxlength="50" size="25"
+						value="#{racaBean.raca.descricao}" required="true"
+						requiredMessage="O campo Nome não pode estar vazio" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{racaBean.salvar()}"
+						update="msg :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

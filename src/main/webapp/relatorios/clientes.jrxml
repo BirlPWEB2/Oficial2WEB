@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-07T15:21:26 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="clientes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b2862bf0-3ae6-4412-9f01-126ff3bb74f4">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CaninoFeliz"/>
+	<parameter name="FUNCIONARIO" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT caninofeliz.cliente.cpf,
+	caninofeliz.cliente.email,
+	caninofeliz.cliente.nome,
+	caninofeliz.cliente.rg,
+	caninofeliz.cliente.sobrenome
+FROM caninofeliz.cliente
+WHERE 
+	 caninofeliz.cliente.nome LIKE $P{FUNCIONARIO} 
+ORDER BY caninofeliz.cliente.nome ASC]]>
+	</queryString>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<field name="sobrenome" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="19" width="550" height="30" uuid="e69c1d8c-3540-4439-9409-fa1ad4cac7f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="25" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Relatorio de Clientes]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="0" width="100" height="30" uuid="db9b11a2-b04a-40c3-b784-c944f0fab454"/>
+				<text><![CDATA[nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="0" width="100" height="30" uuid="bbc77233-3b02-4f27-95d8-748d3ae487df"/>
+				<text><![CDATA[sobrenome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="100" height="30" uuid="f28cc674-10a3-4ca9-8fef-365e90f29833"/>
+				<text><![CDATA[cpf]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="0" width="100" height="30" uuid="cbe0ee09-2265-48c8-974d-1f1360ebeba8"/>
+				<text><![CDATA[email]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="13" y="14" width="100" height="30" uuid="64b448b7-c1ef-4290-b631-6420eb652f84"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="14" width="100" height="30" uuid="9b8b09f4-d830-478e-b340-932f318755a8"/>
+				<textFieldExpression><![CDATA[$F{sobrenome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="10" width="100" height="30" uuid="7d891538-256d-47ef-9c83-3e4f3b77f996"/>
+				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="10" width="100" height="30" uuid="a54bbcd1-6fe2-4d7a-88d1-71b102452b51"/>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

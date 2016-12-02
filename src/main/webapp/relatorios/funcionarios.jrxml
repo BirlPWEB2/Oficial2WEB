@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-07T15:28:43 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="funcionarios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b6ebeb18-4021-4acf-b199-fae91a2d12f8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="Y2FuaW5vZmVsaXouY2FyZ28gLDE5MSwxMzMsZDk3NTkxYWYtOWQ5Yi00MzU2LWI4NjUtMTMyMmRj&#xA;MmFjZDVmO2Nhbmlub2ZlbGl6LmZ1bmNpb25hcmlvICwxNSwxNSwwNjFkODdmYi0zNWVlLTRiZDgt&#xA;OTMzNS0yZGE1MDIxM2JjMjI7"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CaninoFeliz"/>
+	<parameter name="CLIENTE" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT caninofeliz.funcionario.`dataEntrada`,
+	caninofeliz.funcionario.salario,
+	caninofeliz.cargo.descricao,
+	caninofeliz.funcionario.nome,
+	caninofeliz.funcionario.cpf
+FROM caninofeliz.funcionario
+	INNER JOIN caninofeliz.cargo ON 
+	 caninofeliz.funcionario.cargo_codigo = caninofeliz.cargo.codigo 
+WHERE 
+	 caninofeliz.funcionario.nome LIKE $P{CLIENTE} 
+ORDER BY caninofeliz.funcionario.nome ASC]]>
+	</queryString>
+	<field name="dataEntrada" class="java.sql.Date"/>
+	<field name="salario" class="java.math.BigDecimal"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="41" width="550" height="30" uuid="ab6be36f-f6e7-4359-8295-5e48f5f36e3e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="19" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Relatorio de Funcionarios]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="-20" y="0" width="100" height="30" uuid="d54a5ea8-cd25-478d-a7f7-df8e3597d2cb"/>
+				<text><![CDATA[nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="0" width="100" height="30" uuid="9048f98e-d9c0-4586-9502-44c1995bab00"/>
+				<text><![CDATA[cpf]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="0" width="100" height="30" uuid="a2a66302-0f7a-4868-bee6-5333dfcf42c4"/>
+				<text><![CDATA[salario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="0" width="100" height="30" uuid="730dea62-3b6c-4e89-a582-86e2fc0d18cb"/>
+				<text><![CDATA[dataEntrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="100" height="30" uuid="4bb8d685-b5ab-4d98-828f-c1c8d64186a0"/>
+				<text><![CDATA[Cargo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="-20" y="20" width="100" height="30" uuid="198dad7e-d333-4586-9a84-eff2b7722680"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="20" width="100" height="30" uuid="4a0c2b29-024b-462c-b3f1-df873a017bbc"/>
+				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="20" width="100" height="30" uuid="56027aca-6f4a-4ff3-8aca-dfa350b8c802"/>
+				<textFieldExpression><![CDATA[$F{salario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="20" width="100" height="30" uuid="74a051a7-306f-4164-9868-c1ec0bdd2f0a"/>
+				<textFieldExpression><![CDATA[$F{dataEntrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="20" width="100" height="30" uuid="b6357919-c941-4a47-a648-91dc1293f87e"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

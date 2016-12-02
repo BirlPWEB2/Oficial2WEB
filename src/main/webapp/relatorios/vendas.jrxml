@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-05T20:01:22 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vendas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6e9478f5-057c-4623-a385-f0671b5fe5e7">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="Y2FuaW5vZmVsaXouaXRlbXZlbmRhICwxNSwxOTcsNTEzMWFlOTYtYjFiZi00MmM2LTk1NGMtOWYw&#xA;OWNjOTAzNTg3O2Nhbmlub2ZlbGl6Lml0ZW0gLDE3NCwyODksY2EzZTUzMTItMDc5Zi00Y2UxLWEx&#xA;MGItYTU3YWQyMmI3YWZjO2Nhbmlub2ZlbGl6LmZ1bmNpb25hcmlvICw1MzgsMTUsNmNjNTIxMzgt&#xA;ZDMyOC00Mjk0LTk3MTEtODQzYzEzZTM2N2RmO2Nhbmlub2ZlbGl6LnZlbmRhICwxNzQsOTMsZWVm&#xA;ZTk0MDAtODVhYS00YTQ4LWEyYTktODMwNGM1NWVkZjRiO2Nhbmlub2ZlbGl6LmNsaWVudGUgLDM2&#xA;MiwyMDIsZmY5MDYwMjctYWYxMS00MjJlLTllMDMtYjVjYzk3NTRmOTI2Ow=="/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CaninoFeliz"/>
+	<parameter name="Funcionario" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT caninofeliz.venda.horario,
+	caninofeliz.venda.`precoTotal`,
+	caninofeliz.venda.`precoTotal`,
+	caninofeliz.venda.horario,
+	caninofeliz.item.descricao,
+	caninofeliz.item.validade,
+	caninofeliz.itemvenda.quantidade,
+	caninofeliz.item.preco,
+	caninofeliz.cliente.nome,
+	caninofeliz.cliente.sobrenome,
+	caninofeliz.funcionario.nome
+FROM caninofeliz.itemvenda
+	INNER JOIN caninofeliz.venda ON 
+	 caninofeliz.itemvenda.venda_codigo = caninofeliz.venda.codigo 
+	INNER JOIN caninofeliz.item ON 
+	 caninofeliz.itemvenda.item_codigo = caninofeliz.item.codigo 
+	INNER JOIN caninofeliz.cliente ON 
+	 caninofeliz.venda.cliente_codigo = caninofeliz.cliente.codigo 
+	INNER JOIN caninofeliz.funcionario ON 
+	 caninofeliz.venda.funcionario_codigo = caninofeliz.funcionario.codigo 
+WHERE 
+	 caninofeliz.funcionario.nome LIKE $P{Funcionario} 
+ORDER BY caninofeliz.cliente.nome ASC]]>
+	</queryString>
+	<field name="horario" class="java.sql.Timestamp"/>
+	<field name="precoTotal" class="java.math.BigDecimal"/>
+	<field name="COLUMN_3" class="java.math.BigDecimal"/>
+	<field name="COLUMN_4" class="java.sql.Timestamp"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="validade" class="java.sql.Date"/>
+	<field name="quantidade" class="java.lang.Integer"/>
+	<field name="preco" class="java.math.BigDecimal"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="sobrenome" class="java.lang.String"/>
+	<field name="COLUMN_11" class="java.lang.String"/>
+	<pageHeader>
+		<band height="41">
+			<staticText>
+				<reportElement x="0" y="0" width="570" height="41" uuid="bc4a673e-e0b6-40e4-b5a6-bbe6cd2bc304"/>
+				<textElement textAlignment="Center" verticalAlignment="Justified">
+					<font fontName="Arial" size="16" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Relatorio de Vendas]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="60" y="11" width="100" height="30" uuid="ab4d554c-1927-4286-8d65-0caa2065a105"/>
+				<text><![CDATA[Preco Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="11" width="100" height="30" uuid="73d86252-8a83-4951-9bf8-8cf3d14343eb"/>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="402" y="11" width="100" height="30" uuid="85d54949-dee5-4c5a-8c8b-1f04eb53e551"/>
+				<text><![CDATA[Funcionario]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="60" y="21" width="100" height="30" uuid="1abd220e-95ab-4915-8b6c-95488f6b0704"/>
+				<textFieldExpression><![CDATA[$F{precoTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="234" y="21" width="100" height="30" uuid="8f94af70-f540-499b-86bb-17c801601cfd"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="20" width="100" height="30" uuid="89f279ea-f559-4665-bfaa-c553e98d4d58"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_11}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

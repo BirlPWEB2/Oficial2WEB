@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel header="Horarios">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{horarioAgendaBean.horarios}"
+					var="horario" rows="5">
+					<f:facet name="header">
+						<p:commandButton value="Novo"
+							actionListener="#{horarioAgendaBean.novo}"
+							oncomplete="PF('dialogo').show();"
+							update=":msg :formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+
+					<p:column headerText="Data" filterBy="#{horario.data}"
+						sortBy="#{horario.data}">
+						<h:outputText value="#{horario.data}" />
+					</p:column>
+
+					<p:column headerText="Horario" filterBy="#{horario.horario}"
+						sortBy="#{horario.horario}">
+						<h:outputText value="#{horario.horario}" />
+					</p:column>
+
+					<p:column headerText="Agenda"
+						filterBy="#{horario.agenda.funcionario}"
+						sortBy="#{horario.agenda.funcionario}">
+						<h:outputText value="#{horario.agenda.funcionario.nome}" />
+					</p:column>
+					
+					<p:column headerText="Animal"
+						filterBy="#{horario.animal.nome}"
+						sortBy="#{horario.animal.nome}">
+						<h:outputText value="#{horario.animal.nome}" />
+					</p:column>
+
+					<p:column headerText="Opções">
+						<p:commandButton value="Excluir"
+							actionListener="#{horarioAgendaBean.excluir}"
+							update=":msg :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o horario?" icon="ui-icon-alert" />
+							<f:attribute name="horarioSelecionada" value="#{horario}" />
+						</p:commandButton>
+
+						<p:commandButton value="Editar"
+							actionListener="#{horarioAgendaBean.editar}"
+							update=":msg :formCadastro:painel"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="horarioSelecionada" value="#{horario}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+		<p:dialog header="Cadastro" widgetVar="dialogo" draggable="false"
+			resizable="false" modal="true" closable="false" appendTo="@(body)">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="data" value="Data Livre:" />
+					<p:calendar id="data"
+						value="#{horarioAgendaBean.horario.data}" required="true"
+						requiredMessage="O campo 'Data' é obrigatório"
+						size="10" locale="pt_BR" />
+
+					<p:outputLabel for="horario" value="Horario:" />
+					<p:inputText id="horario" maxlength="50" size="30"
+						value="#{horarioAgendaBean.horario.horario}" required="true"
+						requiredMessage="O campo horario não pode estar vazio" />
+
+					<p:outputLabel for="agenda" value="Funcionario - Agenda:" />
+					<p:selectOneMenu id="agenda" filter="true"
+						value="#{horarioAgendaBean.horario.agenda}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="A agenda não pode estar vazio">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma agenda!" />
+						<f:selectItems value="#{horarioAgendaBean.agendas}" var="horario"
+							itemValue="#{horario}" itemLabel="#{horario.funcionario.nome}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{horarioAgendaBean.salvar}"
+						update=":msg :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
